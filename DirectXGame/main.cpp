@@ -29,5 +29,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	gameScene = nullptr;
 	KamataEngine::Finalize();
 
+	//何かしらの変更
+
 	return 0;
 }
