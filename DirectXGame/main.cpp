@@ -11,6 +11,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	KamataEngine::Initialize(L"GC2C_11_モトハシ_リョウイチ");
 
+	gameScene->Initialize();
+
 	while (true) {
 		if (KamataEngine::Update()) {
 			break;
