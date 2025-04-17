@@ -6,7 +6,7 @@ void GameScene::Initialize() {
 
 	texturHandle_ = TextureManager::Load("sample.png");
 
-	sprite_ = Sprite::Create(texturHandle_, {100, 50});
+	model_ = Model::Create();
 
 }
 
