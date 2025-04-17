@@ -12,4 +12,6 @@ public:
 
 	uint32_t texturHandle_ = 0;
 
+	KamataEngine::Sprite* sprite_ = nullptr;
+
 };
