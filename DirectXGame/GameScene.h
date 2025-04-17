@@ -10,4 +10,6 @@ public:
 
 	void Draw();
 
+	uint32_t texturHandle_ = 0;
+
 };
