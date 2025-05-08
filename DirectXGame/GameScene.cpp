@@ -3,28 +3,48 @@
 using namespace KamataEngine;
 
 GameScene::~GameScene() { 
-	delete model_; 
-	delete player_;
+	delete modelBlock_; 
+
+	for (WorldTransform* worldTransformBlock : worldTransformBlocks_) {
+		delete worldTransformBlock;
+	}
+	worldTransformBlocks_.clear();
+
 }
 
 void GameScene::Initialize() {
 
-	textureHandle_ = TextureManager::Load("sample.png");
+	const uint32_t kNumBlockHolizontal = 20;
+	const float kBlockWidth = 2.0f;
 
-	model_ = Model::Create();
+	worldTransformBlocks_.resize(kNumBlockHolizontal);
+
+	for (uint32_t i = 0; i < kNumBlockHolizontal; ++i) {
+	
+		worldTransformBlocks_[i] = new WorldTransform();
+		worldTransformBlocks_[i]->Initialize();
+		worldTransformBlocks_[i]->translation_.x = kBlockWidth * i;
+		worldTransformBlocks_[i]->translation_.y = 0.0f;
+
+	}
+
+	/*textureHandle_ = TextureManager::Load("sample.png");
+
+	modelBlock_ = Model::Create();
 
 	worldTransform_.Initialize();
 
-	camera_.Initialize();
-
-	player_ = new Player();
-	player_->Initialize(model_,textureHandle_,&camera_);
+	camera_.Initialize();*/
 
 }
 
 void GameScene::Update() {
 
-	player_->Updete();
+	for (WorldTransform* worldTransformBlock : worldTransformBlocks_) {
+	
+
+		worldTransformBlock->TransferMatrix();
+	}
 
 }
 
@@ -33,8 +53,6 @@ void GameScene::Draw() {
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
 	Model::PreDraw(dxCommon->GetCommandList());
-
-	player_->Draw();
 
 	Model::PostDraw();
 
