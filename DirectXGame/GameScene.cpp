@@ -28,13 +28,13 @@ void GameScene::Initialize() {
 
 	}
 
-	/*textureHandle_ = TextureManager::Load("sample.png");
+	//textureHandle_ = TextureManager::Load("sample.png");
 
-	modelBlock_ = Model::Create();
+	modelBlock_ = Model::CreateFromOBJ("cube");
 
 	worldTransform_.Initialize();
 
-	camera_.Initialize();*/
+	camera_.Initialize();
 
 }
 
