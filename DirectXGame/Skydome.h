@@ -16,4 +16,6 @@ class Skydome {
 
 		KamataEngine::Model* model_ = nullptr;
 
+		KamataEngine::Camera* camera_ = nullptr;
+
 };

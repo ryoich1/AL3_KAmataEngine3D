@@ -15,6 +15,10 @@ GameScene::~GameScene() {
 
 	delete debugCamera_;
 
+	delete modelSkydome_;
+
+	delete skydome_;
+
 }
 
 void GameScene::Initialize() {
@@ -50,6 +54,12 @@ void GameScene::Initialize() {
 
 	debugCamera_ = new DebugCamera(1280, 720);
 
+	skydome_ = new Skydome();
+
+	skydome_->Initialize();
+
+	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
+
 }
 
 void GameScene::Update() {
@@ -84,6 +94,8 @@ void GameScene::Update() {
 		camera_.UpdateMatrix();
 	}
 
+	skydome_->Update();
+
 }
 
 void GameScene::Draw() {
@@ -101,5 +113,7 @@ void GameScene::Draw() {
 	}
 	
 	Model::PostDraw();
+
+	skydome_->Draw();
 
 }
