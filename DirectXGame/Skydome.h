@@ -1,10 +1,13 @@
 #pragma once
 #include <KamataEngine.h>
+
+using namespace KamataEngine;
+
 class Skydome {
 
 	public:
 
-		void Initialize();
+		void Initialize(Model* model, Camera* camera);
 
 		void Update();
 

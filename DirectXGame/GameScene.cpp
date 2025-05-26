@@ -46,7 +46,7 @@ void GameScene::Initialize() {
 		}
 	}
 
-	modelBlock_ = Model::CreateFromOBJ("cube");
+	modelBlock_ = Model::CreateFromOBJ("block");
 
 	worldTransform_.Initialize();
 
@@ -56,9 +56,10 @@ void GameScene::Initialize() {
 
 	skydome_ = new Skydome();
 
-	skydome_->Initialize();
-
 	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
+
+	skydome_->Initialize(modelSkydome_, &camera_);
+
 
 }
 
@@ -104,6 +105,8 @@ void GameScene::Draw() {
 
 	Model::PreDraw(dxCommon->GetCommandList());
 
+	skydome_->Draw();
+
 	modelBlock_->Draw(worldTransform_, camera_);
 
     for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
@@ -113,7 +116,5 @@ void GameScene::Draw() {
 	}
 	
 	Model::PostDraw();
-
-	skydome_->Draw();
 
 }
