@@ -6,6 +6,7 @@ using namespace KamataEngine;
 class Player {
 
 public:
+
 	void Initialize(Model* model,Camera* camera);
 
 	void Updete();
@@ -21,4 +22,5 @@ private:
 	Camera* camera_ = nullptr;
 
 	std::vector<std::vector<KamataEngine::WorldTransform*>> worldTransformBlocks_;
+
 };

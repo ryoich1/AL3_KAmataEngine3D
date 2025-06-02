@@ -19,20 +19,18 @@ GameScene::~GameScene() {
 
 	delete skydome_;
 
+	delete mapChipField_;
+
 }
 
 void GameScene::Initialize() {
 
-	const uint32_t kNumBlockHolizontal = 20;
+	/*const uint32_t kNumBlockHolizontal = 20;
 	const uint32_t kNumBlockVirtical = 10;
 	const float kBlockWidth = 2.0f;
-	const float kBlockHeight = 2.0f;
+	const float kBlockHeight = 2.0f;*/
 
-	worldTransformBlocks_.resize(kNumBlockHolizontal);
-	for (uint32_t i = 0; i < kNumBlockVirtical; ++i) {
-		worldTransformBlocks_[i].resize(kNumBlockHolizontal);
-	}
-	for (uint32_t i = 0; i < kNumBlockVirtical; ++i) {
+	/*for (uint32_t i = 0; i < kNumBlockVirtical; ++i) {
 		for (uint32_t j = 0; j < kNumBlockHolizontal; ++j) {		
 			worldTransformBlocks_[i][j] = new WorldTransform();
 			worldTransformBlocks_[i][j]->Initialize();
@@ -44,7 +42,7 @@ void GameScene::Initialize() {
 			worldTransformBlocks_[i][j]->translation_.x = kBlockWidth * j;
 			worldTransformBlocks_[i][j]->translation_.y = kBlockHeight * i;		
 		}
-	}
+	}*/
 
 	modelBlock_ = Model::CreateFromOBJ("block");
 
@@ -60,6 +58,10 @@ void GameScene::Initialize() {
 
 	skydome_->Initialize(modelSkydome_, &camera_);
 
+	mapChipField_ = new MapChipField;
+	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
+
+	GenerateBlocks();
 
 }
 
@@ -111,10 +113,35 @@ void GameScene::Draw() {
 
     for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlock : worldTransformBlockLine) {
+			if (!worldTransformBlock) {
+				continue;
+			}
 		    modelBlock_->Draw(*worldTransformBlock, camera_);
 		}
 	}
 	
 	Model::PostDraw();
 
+}
+
+void GameScene::GenerateBlocks() {
+
+	uint32_t numBlockVirtical = mapChipField_->GetNumBlockVirtical();
+	uint32_t numBlockHorizontal = mapChipField_->GetNumBlockHorizontal();
+
+	worldTransformBlocks_.resize(numBlockHorizontal);
+	for (uint32_t i = 0; i < numBlockVirtical; ++i) {
+		worldTransformBlocks_[i].resize(numBlockHorizontal);
+	}
+
+	for (uint32_t i = 0; i < numBlockVirtical; ++i) {
+		for (uint32_t j = 0; j < numBlockHorizontal; ++j) {
+			if (mapChipField_->GetMapChipTypeByIndex(j, i) == MapChipType::kBlock) {
+				WorldTransform* worldTransform = new WorldTransform();
+				worldTransform->Initialize();
+				worldTransformBlocks_[i][j]=worldTransform;
+				worldTransformBlocks_[i][j]->translation_ =mapChipField_->GetMapChipPositionByIndex(j,i);
+			}
+		}
+	}
 }

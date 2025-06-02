@@ -2,6 +2,7 @@
 #include <KamataEngine.h>
 #include <vector>
 #include "Skydome.h"
+#include "MapChipField.h"
 
 class GameScene 
 {
@@ -14,6 +15,8 @@ public:
 	void Update();
 
 	void Draw();
+
+	void GenerateBlocks();
 
 private:
 	uint32_t textureHandle_ = 0;
@@ -33,5 +36,7 @@ private:
 	Skydome* skydome_ = nullptr;
 
 	KamataEngine::Model* modelSkydome_ = nullptr;
+
+	MapChipField* mapChipField_;
 
 };
