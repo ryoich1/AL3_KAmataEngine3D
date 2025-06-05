@@ -3,6 +3,7 @@
 #include <vector>
 #include "Skydome.h"
 #include "MapChipField.h"
+#include "Player.h"
 
 class GameScene 
 {
@@ -38,5 +39,7 @@ private:
 	KamataEngine::Model* modelSkydome_ = nullptr;
 
 	MapChipField* mapChipField_;
+
+	Player* player_ = nullptr;
 
 };

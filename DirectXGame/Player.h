@@ -7,11 +7,11 @@ class Player {
 
 public:
 
-	void Initialize(Model* model,Camera* camera);
-
-	void Updete();
+	void Update();
 
 	void Draw();
+
+	void Initialize(Model* model, Camera* camera, Vector3& position);
 
 private:
 

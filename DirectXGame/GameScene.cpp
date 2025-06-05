@@ -21,6 +21,8 @@ GameScene::~GameScene() {
 
 	delete mapChipField_;
 
+	delete player_;
+
 }
 
 void GameScene::Initialize() {
@@ -63,6 +65,10 @@ void GameScene::Initialize() {
 
 	GenerateBlocks();
 
+	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(1,1);
+
+	
+
 }
 
 void GameScene::Update() {
@@ -99,6 +105,8 @@ void GameScene::Update() {
 
 	skydome_->Update();
 
+	player_->Update();
+
 }
 
 void GameScene::Draw() {
@@ -108,6 +116,8 @@ void GameScene::Draw() {
 	Model::PreDraw(dxCommon->GetCommandList());
 
 	skydome_->Draw();
+
+	player_->Draw();
 
 	modelBlock_->Draw(worldTransform_, camera_);
 
