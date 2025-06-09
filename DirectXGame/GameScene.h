@@ -2,6 +2,7 @@
 #include <KamataEngine.h>
 #include <vector>
 #include "Skydome.h"
+#include "Player.h"
 
 class GameScene 
 {
@@ -23,6 +24,8 @@ private:
 	KamataEngine::WorldTransform worldTransform_;
 
 	KamataEngine::Camera camera_;
+
+	Player* player_ = nullptr;
 
 	std::vector<std::vector<KamataEngine::WorldTransform*>> worldTransformBlocks_;
 

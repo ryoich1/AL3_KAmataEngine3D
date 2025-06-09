@@ -19,6 +19,8 @@ GameScene::~GameScene() {
 
 	delete skydome_;
 
+	delete player_;
+
 }
 
 void GameScene::Initialize() {
@@ -60,6 +62,8 @@ void GameScene::Initialize() {
 
 	skydome_->Initialize(modelSkydome_, &camera_);
 
+	player_ = new Player();
+	player_->Initialize();
 
 }
 
@@ -97,6 +101,8 @@ void GameScene::Update() {
 
 	skydome_->Update();
 
+	player_->Updete();
+
 }
 
 void GameScene::Draw() {
@@ -116,5 +122,7 @@ void GameScene::Draw() {
 	}
 	
 	Model::PostDraw();
+
+	player_->Draw();
 
 }

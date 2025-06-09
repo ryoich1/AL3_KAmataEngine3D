@@ -18,9 +18,11 @@ void Player::Initialize(Model* model,Camera* camera) {
 
 void Player::Updete() { 
 
-	worldTransform_.TransferMatrix(); 
 
 	worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
+	worldTransform_.TransferMatrix(); 
+
+	
 
 }
 
