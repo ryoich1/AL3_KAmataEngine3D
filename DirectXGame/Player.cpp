@@ -12,6 +12,8 @@ void Player::Initialize(Model* model,Camera* camera) {
 	model_ = model;
 	camera_ = camera;
 	worldTransform_.Initialize();
+	model_ = Model::CreateFromOBJ("skydome", true);
+
 }
 
 void Player::Updete() { 
