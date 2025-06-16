@@ -42,4 +42,6 @@ private:
 
 	Player* player_ = nullptr;
 
+	Model* model_ = nullptr;
+
 };

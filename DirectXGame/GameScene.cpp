@@ -27,25 +27,6 @@ GameScene::~GameScene() {
 
 void GameScene::Initialize() {
 
-	/*const uint32_t kNumBlockHolizontal = 20;
-	const uint32_t kNumBlockVirtical = 10;
-	const float kBlockWidth = 2.0f;
-	const float kBlockHeight = 2.0f;*/
-
-	/*for (uint32_t i = 0; i < kNumBlockVirtical; ++i) {
-		for (uint32_t j = 0; j < kNumBlockHolizontal; ++j) {		
-			worldTransformBlocks_[i][j] = new WorldTransform();
-			worldTransformBlocks_[i][j]->Initialize();
-			if (j % 2 == 0) {
-				if (i % 2 == 0) {
-					continue;
-				}				
-			}
-			worldTransformBlocks_[i][j]->translation_.x = kBlockWidth * j;
-			worldTransformBlocks_[i][j]->translation_.y = kBlockHeight * i;		
-		}
-	}*/
-
 	modelBlock_ = Model::CreateFromOBJ("block");
 
 	worldTransform_.Initialize();
@@ -65,9 +46,11 @@ void GameScene::Initialize() {
 
 	GenerateBlocks();
 
-	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(1,1);
+	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(1,18);
 
-	player_->Initialize(, &camera_, playerPosition);
+	player_ = new Player();
+	model_ = Model::CreateFromOBJ("player", true);
+	player_->Initialize(model_, &camera_, playerPosition);
 
 }
 
