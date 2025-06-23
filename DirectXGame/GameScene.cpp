@@ -23,6 +23,8 @@ GameScene::~GameScene() {
 
 	delete player_;
 
+	delete cameraController_;
+
 }
 
 void GameScene::Initialize() {
@@ -51,6 +53,15 @@ void GameScene::Initialize() {
 	player_ = new Player();
 	model_ = Model::CreateFromOBJ("player", true);
 	player_->Initialize(model_, &camera_, playerPosition);
+
+	cameraController_ = new CameraController();
+	cameraController_->Initialize();
+	cameraController_->SetTarget(player_);
+	cameraController_->Reset();
+
+	CameraController::Rect cameraArea = {12.0f, 100 - 12.0f, 6.0f, 6.0f};
+	cameraController_->SetMovableArea(cameraArea);
+
 
 }
 
@@ -84,11 +95,16 @@ void GameScene::Update() {
 		camera_.TransferMatrix();
 	} else {
 		camera_.UpdateMatrix();
+		camera_.matView = cameraController_->GetViewProjection().matView;
+		camera_.matProjection = cameraController_->GetViewProjection().matProjection;
+		camera_.TransferMatrix();
 	}
 
 	skydome_->Update();
 
 	player_->Update();
+
+	cameraController_->Update();
 
 }
 

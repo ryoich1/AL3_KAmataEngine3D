@@ -4,6 +4,7 @@
 #include "Skydome.h"
 #include "MapChipField.h"
 #include "Player.h"
+#include "CameraController.h"
 
 class GameScene 
 {
@@ -26,7 +27,7 @@ private:
 
 	KamataEngine::WorldTransform worldTransform_;
 
-	KamataEngine::Camera camera_;
+	//KamataEngine::Camera camera_;
 
 	std::vector<std::vector<KamataEngine::WorldTransform*>> worldTransformBlocks_;
 
@@ -43,5 +44,9 @@ private:
 	Player* player_ = nullptr;
 
 	Model* model_ = nullptr;
+
+	Camera camera_;
+
+	CameraController* cameraController_ = nullptr; 
 
 };

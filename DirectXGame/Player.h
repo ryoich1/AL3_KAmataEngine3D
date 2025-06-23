@@ -13,6 +13,10 @@ public:
 
 	void Initialize(Model* model, Camera* camera, Vector3& position);
 
+	const KamataEngine::WorldTransform& GetWorldTransform() const { return worldTransform_; }
+
+	const KamataEngine::Vector3& GetVelocity() const { return Velocity_; }
+
 private:
 
 	KamataEngine::Model* model_ = nullptr;
