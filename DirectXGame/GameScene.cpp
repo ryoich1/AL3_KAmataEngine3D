@@ -48,11 +48,13 @@ void GameScene::Initialize() {
 
 	GenerateBlocks();
 
+	player_ = new Player();
+
 	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(1,18);
 
-	player_ = new Player();
 	model_ = Model::CreateFromOBJ("player", true);
 	player_->Initialize(model_, &camera_, playerPosition);
+	player_->SetmapChipField(mapChipField_);
 
 	cameraController_ = new CameraController();
 	cameraController_->Initialize();

@@ -3,6 +3,7 @@
 
 using namespace KamataEngine;
 
+class MapChipField;
 class Player {
 
 public:
@@ -17,7 +18,31 @@ public:
 
 	const KamataEngine::Vector3& GetVelocity() const { return Velocity_; }
 
+	void SetmapChipField(MapChipField* mapChipField) { mapChipField_ = mapChipField; }
+
+	void InputMove();
+
+	void AnimateTurn();
+
+	struct CollisionMapInfo {
+
+		bool ceiling = false;
+		bool landing = false;
+		bool hitWall = false;
+		Vector3 move;
+	};
+
+	void CheckMapCollision(CollisionMapInfo& Info);
+
+	void CheckMapCollisionUp(CollisionMapInfo& Info);
+
+	void CheckMapMove(const CollisionMapInfo& Info);
+
+	void CheckMapCeiling(const CollisionMapInfo& Info);
+
 private:
+
+	MapChipField* mapChipField_ = nullptr;
 
 	KamataEngine::Model* model_ = nullptr;
 
@@ -50,5 +75,21 @@ private:
 	static inline const float kGravityAcceleration = 0.25;
 	static inline const float kLimitFallSpeed = 1.0f;
 	static inline const float kJumpAcceleration = 2.0f;
+	static inline const float kWidth = 0.8f;
+	static inline const float kHeight = 0.8f;
+
+	enum Corner {
+
+		kRightBottom,
+		kLeftBottom,
+		kRightTop,
+		kLeftTop,
+
+		kNumCorner
+	};
+
+	Vector3 CornerPosition(const Vector3& center, Corner corner);
+
+	static inline const float kBlank = 5.0f;
 
 };
