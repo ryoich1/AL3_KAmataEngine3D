@@ -36,6 +36,8 @@ public:
 
 	void CheckMapCollisionUp(CollisionMapInfo& Info);
 
+	void CheckMapCollisionDown(CollisionMapInfo& Info);
+
 	void CheckMapMove(const CollisionMapInfo& Info);
 
 	void CheckMapCeiling(const CollisionMapInfo& Info);
