@@ -147,7 +147,7 @@ void Player::AnimateTurn() {
 void Player::CheckMapCollision(CollisionMapInfo& Info) {
 
 	CheckMapCollisionUp(Info);
-	CheckMapCollisionDown(Info);
+	//CheckMapCollisionDown(Info);
 	/*CheckMapCollisionRight(Info);
 	CheckMapCollisionLeft(Info);*/
 
@@ -169,6 +169,7 @@ void Player::CheckMapCollisionUp(CollisionMapInfo& Info) {
 	MapChipType mapChipTypeNext;
 	bool hit = false;
 	MapChipField::IndexSet indexSet;
+
 	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionsNew[kLeftTop]);
 	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
 	mapChipTypeNext = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex + 1);
@@ -211,8 +212,8 @@ void Player::CheckMapCollisionDown(CollisionMapInfo& Info) {
 	MapChipType mapChipType;
 	MapChipType mapChipTypeNext;
 	bool hit = false;
-
 	MapChipField::IndexSet indexSet;
+
 	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionsNew[kLeftBottom]);
 	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
 	mapChipTypeNext = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex - 1);
