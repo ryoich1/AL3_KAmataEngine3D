@@ -42,6 +42,8 @@ public:
 
 	void CheckMapCeiling(const CollisionMapInfo& Info);
 
+	void CheckMapLanding(const CollisionMapInfo& Info);
+
 private:
 
 	MapChipField* mapChipField_ = nullptr;
@@ -76,7 +78,7 @@ private:
 
 	static inline const float kGravityAcceleration = 0.25;
 	static inline const float kLimitFallSpeed = 1.0f;
-	static inline const float kJumpAcceleration = 2.0f;
+	static inline const float kJumpAcceleration = 1.5f;
 	static inline const float kWidth = 0.8f;
 	static inline const float kHeight = 0.8f;
 
@@ -93,5 +95,9 @@ private:
 	Vector3 CornerPosition(const Vector3& center, Corner corner);
 
 	static inline const float kBlank = 5.0f;
+
+	static inline const float kGroundSerchHeight = 0.1f;
+
+	static inline const float kAttenuationLanding = 0.1f;
 
 };
