@@ -44,35 +44,6 @@ void Player::Update() {
 	//6.設置状態の切り替え
 	CheckMapLanding(collisionMapInfo);
 
-	//設置フラグ
-	//bool landing = false;
-
-	/*void Player::CheckMapLanding(const CollisionMapInfo & info) {
-
-
-	}*/
-
-	/*if (Velocity_.y < 0) {
-		if (worldTransform_.translation_.y <= 1.0f) {
-			landing = true;
-		}
-	}
-
-	if (onGround_) {
-		if (Velocity_.y > 0.0f) {
-			onGround_ = false;
-		}
-	} else {
-	
-	    if(landing) {
-			worldTransform_.translation_.y = 1.0f;
-			Velocity_.x *= (1.0f - kAttenuation);
-			Velocity_.y = 0.0f;
-			onGround_ = true;
-	    }
-	
-	}*/
-
 	//7.旋回制御
 	AnimateTurn();
 
