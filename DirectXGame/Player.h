@@ -38,11 +38,17 @@ public:
 
 	void CheckMapCollisionDown(CollisionMapInfo& Info);
 
+	void CheckMapCollisionRight(CollisionMapInfo& Info);
+
+	void CheckMapCollisionLeft(CollisionMapInfo& Info);
+
 	void CheckMapMove(const CollisionMapInfo& Info);
 
 	void CheckMapCeiling(const CollisionMapInfo& Info);
 
 	void CheckMapLanding(const CollisionMapInfo& Info);
+
+	void CheckMapWall(const CollisionMapInfo& Info);
 
 private:
 
@@ -99,5 +105,7 @@ private:
 	static inline const float kGroundSerchHeight = 0.1f;
 
 	static inline const float kAttenuationLanding = 0.1f;
+
+	static inline const float kAttenuationWall = 0.1f;
 
 };
