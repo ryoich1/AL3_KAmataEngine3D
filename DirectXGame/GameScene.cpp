@@ -25,6 +25,8 @@ GameScene::~GameScene() {
 
 	delete cameraController_;
 
+	delete enemy_;
+
 }
 
 void GameScene::Initialize() {
@@ -64,6 +66,12 @@ void GameScene::Initialize() {
 	CameraController::Rect cameraArea = {12.0f, 100 - 12.0f, 6.0f, 6.0f};
 	cameraController_->SetMovableArea(cameraArea);
 
+	enemy_ = new Enemy;
+
+	Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(5, 18);
+	model_ = Model::CreateFromOBJ("enemy", true);
+	enemy_->Initialize(model_, &camera_,enemyPosition);
+	enemy_->SetmapChipField(mapChipField_);
 
 }
 
@@ -108,6 +116,8 @@ void GameScene::Update() {
 
 	cameraController_->Update();
 
+	enemy_->Update();
+
 }
 
 void GameScene::Draw() {
@@ -119,6 +129,8 @@ void GameScene::Draw() {
 	skydome_->Draw();
 
 	player_->Draw();
+
+	enemy_->Draw();
 
 	modelBlock_->Draw(worldTransform_, camera_);
 

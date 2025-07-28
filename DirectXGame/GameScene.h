@@ -5,6 +5,7 @@
 #include "MapChipField.h"
 #include "Player.h"
 #include "CameraController.h"
+#include "Enemy.h"
 
 class GameScene 
 {
@@ -48,5 +49,7 @@ private:
 	Camera camera_;
 
 	CameraController* cameraController_ = nullptr; 
+
+	Enemy* enemy_ = nullptr;
 
 };
