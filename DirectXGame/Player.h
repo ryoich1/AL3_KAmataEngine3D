@@ -1,8 +1,10 @@
 #pragma once
 #include <KamataEngine.h>
+#include "MyMath.h"
 
 using namespace KamataEngine;
 
+class Enemy;
 class MapChipField;
 class Player {
 
@@ -49,6 +51,10 @@ public:
 	void CheckMapLanding(const CollisionMapInfo& Info);
 
 	void CheckMapWall(const CollisionMapInfo& Info);
+
+	void Oncollision(const Enemy* enmey);
+
+	AABB GetAABB();
 
 private:
 
@@ -107,5 +113,7 @@ private:
 	static inline const float kAttenuationLanding = 0.1f;
 
 	static inline const float kAttenuationWall = 0.1f;
+
+	Vector3 GetWorldPosition();
 
 };

@@ -25,7 +25,11 @@ GameScene::~GameScene() {
 
 	delete cameraController_;
 
-	delete enemy_;
+	//delete enemy_;
+
+	for (Enemy* enemy : enemies_) {
+		delete enemy;
+	}
 
 }
 
@@ -66,12 +70,23 @@ void GameScene::Initialize() {
 	CameraController::Rect cameraArea = {12.0f, 100 - 12.0f, 6.0f, 6.0f};
 	cameraController_->SetMovableArea(cameraArea);
 
-	enemy_ = new Enemy;
+	/*enemy_ = new Enemy;
 
 	Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(5, 18);
 	model_ = Model::CreateFromOBJ("enemy", true);
 	enemy_->Initialize(model_, &camera_,enemyPosition);
-	enemy_->SetmapChipField(mapChipField_);
+	enemy_->SetmapChipField(mapChipField_);*/
+
+	model_ = Model::CreateFromOBJ("enemy", true);
+
+	for (int32_t i = 0; i < 3; ++i) {
+	
+	    Enemy* newEnemy = new Enemy();
+		Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(6 + i, 18);
+		newEnemy->Initialize(model_, &camera_, enemyPosition);
+
+	    enemies_.push_back(newEnemy);
+	}
 
 }
 
@@ -116,7 +131,13 @@ void GameScene::Update() {
 
 	cameraController_->Update();
 
-	enemy_->Update();
+	//enemy_->Update();
+
+	for (Enemy* enemy : enemies_) {
+		enemy->Update();
+	}
+
+	CheckAllCollisions();
 
 }
 
@@ -130,7 +151,9 @@ void GameScene::Draw() {
 
 	player_->Draw();
 
-	enemy_->Draw();
+	for (Enemy* enemy : enemies_) {
+		enemy->Draw();
+	}
 
 	modelBlock_->Draw(worldTransform_, camera_);
 
@@ -167,4 +190,31 @@ void GameScene::GenerateBlocks() {
 			}
 		}
 	}
+}
+
+void GameScene::CheckAllCollisions() {
+
+	#pragma region
+	{
+	
+		AABB aabb1, aabb2;
+
+		aabb1 = player_->GetAABB();
+
+		for (Enemy* enemy : enemies_) {
+		
+		   aabb2 = enemy->GetAABB();
+
+		   if (IsCollision(aabb1, aabb2)) {
+		
+		       player_->Oncollision(enemy);
+			   enemy->OnCollision(player_);
+		   
+	      	}
+		
+		}
+	
+	}
+    #pragma endregion
+
 }

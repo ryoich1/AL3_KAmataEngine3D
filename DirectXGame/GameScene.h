@@ -21,14 +21,14 @@ public:
 
 	void GenerateBlocks();
 
+	void CheckAllCollisions();
+
 private:
 	uint32_t textureHandle_ = 0;
 
 	KamataEngine::Model* modelBlock_ = nullptr;
 
 	KamataEngine::WorldTransform worldTransform_;
-
-	//KamataEngine::Camera camera_;
 
 	std::vector<std::vector<KamataEngine::WorldTransform*>> worldTransformBlocks_;
 
@@ -50,6 +50,6 @@ private:
 
 	CameraController* cameraController_ = nullptr; 
 
-	Enemy* enemy_ = nullptr;
+	std::list<Enemy*> enemies_;
 
 };
