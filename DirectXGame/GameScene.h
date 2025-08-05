@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "CameraController.h"
 #include "Enemy.h"
+#include "DeathParticles.h"
 
 class GameScene 
 {
@@ -22,6 +23,10 @@ public:
 	void GenerateBlocks();
 
 	void CheckAllCollisions();
+
+	void ChangePhase();
+
+	bool IsFinished() const { return finished_; }
 
 private:
 	uint32_t textureHandle_ = 0;
@@ -46,10 +51,24 @@ private:
 
 	Model* model_ = nullptr;
 
+	Model* modelPlayer_ = nullptr;
+
 	Camera camera_;
 
 	CameraController* cameraController_ = nullptr; 
 
 	std::list<Enemy*> enemies_;
+
+	DeathParticles* deathParticles_ = nullptr;
+
+	enum class Phase {
+
+		kPlay,
+		kDeath,
+
+	};
+	Phase phase_;
+
+	bool finished_ = false;
 
 };

@@ -25,11 +25,11 @@ GameScene::~GameScene() {
 
 	delete cameraController_;
 
-	//delete enemy_;
-
 	for (Enemy* enemy : enemies_) {
 		delete enemy;
 	}
+
+	delete deathParticles_;
 
 }
 
@@ -58,8 +58,8 @@ void GameScene::Initialize() {
 
 	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(1,18);
 
-	model_ = Model::CreateFromOBJ("player", true);
-	player_->Initialize(model_, &camera_, playerPosition);
+	modelPlayer_ = Model::CreateFromOBJ("player", true);
+	player_->Initialize(modelPlayer_, &camera_, playerPosition);
 	player_->SetmapChipField(mapChipField_);
 
 	cameraController_ = new CameraController();
@@ -69,13 +69,6 @@ void GameScene::Initialize() {
 
 	CameraController::Rect cameraArea = {12.0f, 100 - 12.0f, 6.0f, 6.0f};
 	cameraController_->SetMovableArea(cameraArea);
-
-	/*enemy_ = new Enemy;
-
-	Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(5, 18);
-	model_ = Model::CreateFromOBJ("enemy", true);
-	enemy_->Initialize(model_, &camera_,enemyPosition);
-	enemy_->SetmapChipField(mapChipField_);*/
 
 	model_ = Model::CreateFromOBJ("enemy", true);
 
@@ -87,6 +80,12 @@ void GameScene::Initialize() {
 
 	    enemies_.push_back(newEnemy);
 	}
+
+	//deathParticles_ = new DeathParticles;
+	model_ = Model::CreateFromOBJ("deathParticle", true);
+	//deathParticles_->Initialize(model_, &camera_, playerPosition);
+
+	phase_ = Phase::kPlay;
 
 }
 
@@ -131,13 +130,42 @@ void GameScene::Update() {
 
 	cameraController_->Update();
 
-	//enemy_->Update();
-
 	for (Enemy* enemy : enemies_) {
 		enemy->Update();
 	}
 
 	CheckAllCollisions();
+
+	if (deathParticles_) {
+		deathParticles_->Update();
+	}
+
+	switch (phase_) {
+
+		case Phase::kPlay:
+
+			if (player_->IsDead()) {
+
+			    phase_ = Phase::kDeath;
+
+			    const Vector3& deathParticlesPosition = player_->GetWorldPosition();
+
+				deathParticles_ = new DeathParticles;
+
+			    deathParticles_->Initialize(model_, &camera_, deathParticlesPosition);
+		    }
+
+		break;
+
+		case Phase::kDeath:
+
+		break;
+
+	}
+
+	if (deathParticles_ && deathParticles_->IsFinished()) {
+		finished_ = true;
+	}
 
 }
 
@@ -166,6 +194,10 @@ void GameScene::Draw() {
 		}
 	}
 	
+	if (deathParticles_) {
+		deathParticles_->Draw();
+	}
+
 	Model::PostDraw();
 
 }
@@ -216,5 +248,20 @@ void GameScene::CheckAllCollisions() {
 	
 	}
     #pragma endregion
+
+}
+void GameScene::ChangePhase(){
+
+	switch (phase_) {
+
+		case Phase::kPlay:
+
+			
+		break;
+
+		case Phase::kDeath:
+
+		break;
+	}
 
 }

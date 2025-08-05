@@ -416,7 +416,7 @@ AABB Player::GetAABB() {
 void Player::Oncollision(const Enemy* enmey) {
 
 	(void)enmey;
-	Velocity_ += Vector3(0,1,0);
+	isDead_ = true;
 
 }
 

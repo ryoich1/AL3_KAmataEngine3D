@@ -56,6 +56,10 @@ public:
 
 	AABB GetAABB();
 
+	bool IsDead() const { return isDead_; }
+
+	Vector3 GetWorldPosition();
+
 private:
 
 	MapChipField* mapChipField_ = nullptr;
@@ -114,6 +118,6 @@ private:
 
 	static inline const float kAttenuationWall = 0.1f;
 
-	Vector3 GetWorldPosition();
+	bool isDead_ = false;
 
 };
