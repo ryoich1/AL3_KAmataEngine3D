@@ -8,6 +8,7 @@ TitleScene::~TitleScene() {
 
 	delete model_;
 	delete modelPlayer_;
+	delete fade_;
 
 }
 
@@ -27,9 +28,37 @@ void TitleScene::Initialize() {
 	worldTransformPlayer_.translation_ = {0, -8, 0};
 	worldTransformPlayer_.rotation_.y = std::numbers::pi_v<float>;
 
+	fade_ = new Fade();
+	fade_->Initialize();
+	fade_->Start(Fade::Status::FadeIn, 1.0f);
+
 }
 
 void TitleScene::Update() {
+
+	fade_->Update();
+
+	switch (phase_) {
+
+	case Phase::kMain:
+		if (Input::GetInstance()->PushKey(DIK_SPACE)) {
+			phase_ = Phase::kFadeOut;
+			fade_->Start(Fade::Status::FadeOut, 1.0f);
+		}
+		break;
+	case Phase::kFadeIn:
+		fade_->Update();
+		if (fade_->isFinished()) {
+			phase_ = Phase::kMain;
+		}
+		break;
+	case Phase::kFadeOut:
+		fade_->Update();
+		if (fade_->isFinished()) {
+			finished_ = true;
+		}
+
+	}
 
 	worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
 	worldTransform_.TransferMatrix();
@@ -46,6 +75,8 @@ void TitleScene::Update() {
 }
 
 void TitleScene::Draw() {
+
+	fade_->Draw();
 
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 

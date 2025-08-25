@@ -1,10 +1,19 @@
 #pragma once
 #include <KamataEngine.h>
+#include"Fade.h"
 
 using namespace KamataEngine;
 class TitleScene {
 
 public:
+
+	enum class Phase {
+
+		kFadeIn,
+		kMain,
+		kFadeOut,
+
+	};
 
 	~TitleScene();
 
@@ -31,5 +40,9 @@ private:
 	float rotate = 0.0f;
 
 	bool finished_ = false;
+
+	Fade* fade_ = nullptr;
+
+	Phase phase_ = Phase::kFadeIn;
 
 };

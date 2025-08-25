@@ -7,10 +7,22 @@
 #include "CameraController.h"
 #include "Enemy.h"
 #include "DeathParticles.h"
+#include"Fade.h"
+#include "TitleScene.h"
 
 class GameScene 
 {
 public:
+
+	enum class Phase {
+
+		kFadeIn,
+		kPlay,
+		kDeath,
+		kFadeOut,
+
+	};
+
 
 	~GameScene();
 
@@ -53,6 +65,8 @@ private:
 
 	Model* modelPlayer_ = nullptr;
 
+	Model* modelDeathParticles_ = nullptr;
+
 	Camera camera_;
 
 	CameraController* cameraController_ = nullptr; 
@@ -61,14 +75,10 @@ private:
 
 	DeathParticles* deathParticles_ = nullptr;
 
-	enum class Phase {
-
-		kPlay,
-		kDeath,
-
-	};
 	Phase phase_;
 
 	bool finished_ = false;
+
+	Fade* fade_ = nullptr;
 
 };

@@ -31,6 +31,8 @@ GameScene::~GameScene() {
 
 	delete deathParticles_;
 
+	delete fade_;
+
 }
 
 void GameScene::Initialize() {
@@ -82,14 +84,54 @@ void GameScene::Initialize() {
 	}
 
 	//deathParticles_ = new DeathParticles;
-	model_ = Model::CreateFromOBJ("deathParticle", true);
+	modelDeathParticles_ = Model::CreateFromOBJ("deathParticle", true);
 	//deathParticles_->Initialize(model_, &camera_, playerPosition);
 
-	phase_ = Phase::kPlay;
+	phase_ = Phase::kFadeIn;
+
+	fade_ = new Fade();
+	fade_->Initialize();
+	fade_->Start(Fade::Status::FadeIn, 1.0f);
 
 }
 
 void GameScene::Update() {
+
+	fade_->Update();
+
+	switch (phase_) {
+
+	case Phase::kPlay:
+
+		/*if (player_->IsDead()) {
+
+		    phase_ = Phase::kDeath;
+
+		    const Vector3& deathParticlesPosition = player_->GetWorldPosition();
+
+		    deathParticles_ = new DeathParticles;
+
+		    deathParticles_->Initialize(model_, &camera_, deathParticlesPosition);
+		}*/
+
+		CheckAllCollisions();
+		break;
+
+	case Phase::kDeath:
+
+		deathParticles_->Update();
+		break;
+
+	case Phase::kFadeIn:
+
+		fade_->Update();
+		break;
+
+	case Phase::kFadeOut:
+
+		fade_->Update();
+		break;
+	}
 
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlock : worldTransformBlockLine) {
@@ -140,28 +182,7 @@ void GameScene::Update() {
 		deathParticles_->Update();
 	}
 
-	switch (phase_) {
-
-		case Phase::kPlay:
-
-			if (player_->IsDead()) {
-
-			    phase_ = Phase::kDeath;
-
-			    const Vector3& deathParticlesPosition = player_->GetWorldPosition();
-
-				deathParticles_ = new DeathParticles;
-
-			    deathParticles_->Initialize(model_, &camera_, deathParticlesPosition);
-		    }
-
-		break;
-
-		case Phase::kDeath:
-
-		break;
-
-	}
+	
 
 	if (deathParticles_ && deathParticles_->IsFinished()) {
 		finished_ = true;
@@ -177,7 +198,9 @@ void GameScene::Draw() {
 
 	skydome_->Draw();
 
-	player_->Draw();
+	if (phase_ == Phase::kPlay || phase_ == Phase::kFadeIn) {
+		player_->Draw();
+	}
 
 	for (Enemy* enemy : enemies_) {
 		enemy->Draw();
@@ -199,6 +222,8 @@ void GameScene::Draw() {
 	}
 
 	Model::PostDraw();
+
+	fade_->Draw();
 
 }
 
@@ -254,14 +279,40 @@ void GameScene::ChangePhase(){
 
 	switch (phase_) {
 
-		case Phase::kPlay:
+	case Phase::kPlay:
 
-			
+		if (player_->IsDead() == true) {
+		
+		    phase_ = Phase::kDeath;
+			const Vector3& deathParticlePosition = player_->GetWorldPosition();
+			deathParticles_ = new DeathParticles;
+			deathParticles_->Initialize(modelDeathParticles_, &camera_, deathParticlePosition);
+
+		}	
 		break;
 
-		case Phase::kDeath:
+	case Phase::kDeath:
 
+		if (deathParticles_->IsFinished()) {
+			phase_ = Phase::kFadeOut;
+			fade_->Start(Fade::Status::FadeOut, 1.0f);
+		}
 		break;
+
+	case Phase::kFadeIn:
+
+		if (fade_->isFinished()) {
+			phase_ = Phase::kPlay;
+		}
+		break;
+
+	case Phase::kFadeOut:
+
+		if (fade_->isFinished()) {
+			finished_ = true;
+		}
+		break;
+
 	}
 
 }
