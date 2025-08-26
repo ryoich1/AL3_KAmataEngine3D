@@ -32,11 +32,11 @@ void TitleScene::Initialize() {
 	fade_->Initialize();
 	fade_->Start(Fade::Status::FadeIn, 1.0f);
 
+	fade_->Update();
+
 }
 
 void TitleScene::Update() {
-
-	fade_->Update();
 
 	switch (phase_) {
 
@@ -68,15 +68,9 @@ void TitleScene::Update() {
 	worldTransformPlayer_.matWorld_ = MakeAffineMatrix(worldTransformPlayer_.scale_, worldTransformPlayer_.rotation_, worldTransformPlayer_.translation_);
 	worldTransformPlayer_.TransferMatrix();
 
-	if (Input::GetInstance()->PushKey(DIK_SPACE)) {
-		finished_ = true;
-	}
-
 }
 
 void TitleScene::Draw() {
-
-	fade_->Draw();
 
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
@@ -86,4 +80,6 @@ void TitleScene::Draw() {
 	modelPlayer_->Draw(worldTransformPlayer_, camera_);
 
 	Model::PostDraw();
+
+	fade_->Draw();
 }
