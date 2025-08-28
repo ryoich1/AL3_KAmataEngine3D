@@ -74,9 +74,9 @@ private:
 
 	Vector3 Velocity_ = {};
 
-	static inline const float kAcceleration = 0.05f;
-	static inline const float kAttenuation = 0.05f;
-	static inline const float kLimitRunSpeed = 0.5f;
+	static inline const float kAcceleration = 0.1f;
+	static inline const float kAttenuation = 0.1f;
+	static inline const float kLimitRunSpeed = 0.2f;
 
 	enum class LRDirection {
 
@@ -92,8 +92,8 @@ private:
 
 	bool onGround_ = true;
 
-	static inline const float kGravityAcceleration = 0.1f;
-	static inline const float kLimitFallSpeed = 1.0f;
+	static inline const float kGravityAcceleration = 0.08f;
+	static inline const float kLimitFallSpeed = 0.5f;
 	static inline const float kJumpAcceleration = 1.0f;
 	static inline const float kWidth = 0.8f;
 	static inline const float kHeight = 0.8f;
