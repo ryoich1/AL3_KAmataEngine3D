@@ -8,7 +8,7 @@ using namespace MathUtility;
 
 void Enemy::Initialize(Model* model, Camera* camera, Vector3& position) {
 
-	assert(model);
+	//assert(model);
 
 	model_ = model;
 	camera_ = camera;
